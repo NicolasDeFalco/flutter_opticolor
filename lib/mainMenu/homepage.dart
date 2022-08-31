@@ -16,7 +16,6 @@ class MyHomePageState extends State<MyHomePage> {
   int highscore = 0;
 
   void waitForCallback(BuildContext context) async {
-    highscore++;
     final newBest = await Navigator.push(context,
         MaterialPageRoute(builder: ((context) => Game(highscore: highscore))));
     setState(() {

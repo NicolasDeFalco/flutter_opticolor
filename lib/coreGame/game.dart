@@ -123,7 +123,7 @@ class GameState extends State<Game> {
             ),
             Text(
               writtenText[rngText - 1],
-              style: TextStyle(color: fontColor[rngFont - 1], fontSize: 70),
+              style: TextStyle(color: fontColor[rngFont - 1], fontSize: 60),
             ),
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -140,7 +140,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(1);
                               });
                             },
                             child: Column(
@@ -162,7 +162,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(2);
                               });
                             },
                             child: Column(
@@ -184,7 +184,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(3);
                               });
                             },
                             child: Column(
@@ -211,7 +211,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(4);
                               });
                             },
                             child: Column(
@@ -233,7 +233,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(5);
                               });
                             },
                             child: Column(
@@ -255,7 +255,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(6);
                               });
                             },
                             child: Column(
@@ -282,7 +282,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(7);
                               });
                             },
                             child: Column(
@@ -304,7 +304,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(8);
                               });
                             },
                             child: Column(
@@ -326,7 +326,7 @@ class GameState extends State<Game> {
                             //splashColor: Colors.white,
                             onTap: () {
                               setState(() {
-                                rerollFontColor();
+                                checkColor(9);
                               });
                             },
                             child: Column(
