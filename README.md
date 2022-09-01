@@ -10,5 +10,5 @@ the wrong button).
 
 You can get clearer explanation by following this link:
 
-- [Stroop effect (Wikipedia)](https://docs.flutter.dev/get-started/codelab)
+- [Stroop effect (Wikipedia)](https://en.wikipedia.org/wiki/Stroop_effect)
 
