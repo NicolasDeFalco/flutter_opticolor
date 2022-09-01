@@ -2,15 +2,13 @@
 
 Opticolor is a game inspired by an optical illusion
 
-## Getting Started
+## Explanation
 
-This project is a starting point for a Flutter application.
+The objective of this game is to press on the color the text is
+without being confused by the word written(and therefor pressing
+the wrong button). 
 
-A few resources to get you started if this is your first Flutter project:
+You can get clearer explanation by following this link:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Stroop effect (Wikipedia)](https://docs.flutter.dev/get-started/codelab)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
