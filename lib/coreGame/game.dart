@@ -49,7 +49,7 @@ class GameState extends State<Game> {
 
   void _callback(BuildContext context) async {
     ok = false;
-    int newPB = highscore;
+    int? newPB = highscore;
     setState(() {
       rngText = 10;
       rngFont = 10;
