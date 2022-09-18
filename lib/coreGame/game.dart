@@ -1,3 +1,4 @@
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -60,9 +61,15 @@ class GameState extends State<Game> {
       setState(() {
         rngText = 11;
       });
+      await saveHighscore(score);
       await Future.delayed(const Duration(seconds: 3));
     }
     Navigator.pop(context, newPB);
+  }
+
+  Future<void> saveHighscore(int newHighscore) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt('highscore', newHighscore);
   }
 
   void checkColor(int colorValue) {

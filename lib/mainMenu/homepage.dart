@@ -3,17 +3,21 @@ import '../coreGame/game.dart';
 //import 'score.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title}) : super(key: key);
+  const MyHomePage({Key? key, required this.title, required this.highscore})
+      : super(key: key);
 
   final String title;
+  final int highscore;
 
   @override
-  State<MyHomePage> createState() => MyHomePageState();
+  State<MyHomePage> createState() => MyHomePageState(highscore);
 }
 
 class MyHomePageState extends State<MyHomePage> {
   //Variable declaration
-  int highscore = 0;
+  int highscore;
+
+  MyHomePageState(this.highscore);
 
   void waitForCallback(BuildContext context) async {
     final newBest = await Navigator.push(context,
