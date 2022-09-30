@@ -8,6 +8,7 @@ void main() async {
 }
 
 Future<int> getHighscore() async {
+  WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
   final savedHighscore = prefs.getInt('highscore') ?? 0;
   return savedHighscore as int;

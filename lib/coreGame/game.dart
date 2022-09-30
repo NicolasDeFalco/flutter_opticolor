@@ -108,270 +108,249 @@ class GameState extends State<Game> {
       ),*/
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      'Score: $score',
-                      style: Theme.of(context).textTheme.headline3,
-                    ),
-                    Text(
-                      'High score: $highscore',
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Text(
-              writtenText[rngText - 1],
-              style: TextStyle(color: fontColor[rngFont - 1], fontSize: 60),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.pink,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(1);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("PINK"),
-                              ],
-                            ),
-                          ),
-                        ),
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        'Score: $score',
+                        style: Theme.of(context).textTheme.headline3,
                       ),
-                    ),
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.purple,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(2);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("PURPLE"),
-                              ],
-                            ),
-                          ),
-                        ),
+                      Text(
+                        'High score: $highscore',
+                        style: Theme.of(context).textTheme.headline6,
                       ),
-                    ),
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.brown,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(3);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("BROWN"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.yellow,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(4);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("YELLOW"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.red,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(5);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("RED"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.orange,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(6);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("ORANGE"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: <Widget>[
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.green,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(7);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("GREEN"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.blue,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(8);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("BLUE"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    SizedBox.fromSize(
-                      size: const Size(137, 90),
-                      child: ClipRRect(
-                        child: Material(
-                          color: Colors.grey,
-                          child: InkWell(
-                            //splashColor: Colors.white,
-                            onTap: () {
-                              setState(() {
-                                checkColor(9);
-                              });
-                            },
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const <Widget>[
-                                Text("GREY"),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox.fromSize(
-              size: const Size(190, 70),
-              child: ClipRRect(
-                child: Material(
-                  color: Colors.pink,
-                  child: InkWell(
-                    //splashColor: Colors.white,
-                    onTap: () {
-                      _callback(context);
-                    },
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: const <Widget>[
-                        Text("Go back"),
-                      ],
-                    ),
+                    ],
                   ),
-                ),
+                ],
               ),
-            ),
-          ],
-        ),
+              Text(
+                writtenText[rngText - 1],
+                style: TextStyle(color: fontColor[rngFont - 1], fontSize: 50),
+              ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: <Widget>[
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.pink,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(1);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("PINK"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.purple,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(2);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("PURPLE"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.brown,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(3);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("BROWN"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.yellow,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(4);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("YELLOW"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.red,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(5);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("RED"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.orange,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(6);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("ORANGE"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.green,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(7);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("GREEN"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.blue,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(8);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("BLUE"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox.fromSize(
+                        size: const Size(120, 90),
+                        child: ClipRRect(
+                          child: Material(
+                            color: Colors.grey,
+                            child: InkWell(
+                              //splashColor: Colors.white,
+                              onTap: () {
+                                setState(() {
+                                  checkColor(9);
+                                });
+                              },
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: const <Widget>[
+                                  Text("GREY"),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ]),
       ),
     );
   }
