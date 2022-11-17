@@ -73,13 +73,15 @@ class GameState extends State<Game> {
   }
 
   void checkColor(int colorValue) {
-    if (colorValue == rngFont) {
-      setState(() {
-        score++;
-        rerollFontColor();
-      });
-    } else {
-      _callback(context);
+    if (ok = true) {
+      if (colorValue == rngFont) {
+        setState(() {
+          score++;
+          rerollFontColor();
+        });
+      } else {
+        _callback(context);
+      }
     }
   }
 
