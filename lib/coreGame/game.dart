@@ -4,10 +4,17 @@ import 'dart:math';
 
 class Game extends StatefulWidget {
   int highscore;
-  Game({Key? key, required this.highscore}) : super(key: key);
+  bool darkMode;
+  Color textColor;
+  Game(
+      {Key? key,
+      required this.highscore,
+      required this.darkMode,
+      required this.textColor})
+      : super(key: key);
 
   @override
-  State<Game> createState() => GameState(highscore);
+  State<Game> createState() => GameState(highscore, darkMode, textColor);
 }
 
 class GameState extends State<Game> {
@@ -17,6 +24,8 @@ class GameState extends State<Game> {
   int rngFont = Random().nextInt(9) + 1;
   int rngText = Random().nextInt(9) + 1;
   bool ok = true;
+  bool darkMode;
+  Color textColor;
 
   //List of item
   final List<Color> fontColor = [
@@ -29,7 +38,7 @@ class GameState extends State<Game> {
     Colors.green,
     Colors.blue,
     Colors.grey,
-    Colors.black
+    Colors.grey.shade600
   ];
 
   final List<String> writtenText = [
@@ -46,7 +55,14 @@ class GameState extends State<Game> {
     "New highscore!"
   ];
 
-  GameState(this.highscore);
+  GameState(this.highscore, this.darkMode, this.textColor);
+
+  Color uiTheme() {
+    if (darkMode) {
+      return Colors.grey.shade900;
+    }
+    return Colors.white;
+  }
 
   void _callback(BuildContext context) async {
     ok = false;
@@ -100,6 +116,7 @@ class GameState extends State<Game> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: uiTheme(),
       /*appBar: AppBar(
         title: Text("Opticolor"),
         // The widget bellow allow you to turn your appbar
@@ -125,11 +142,11 @@ class GameState extends State<Game> {
                     children: <Widget>[
                       Text(
                         'Score: $score',
-                        style: Theme.of(context).textTheme.headline3,
+                        style: TextStyle(color: textColor, fontSize: 40),
                       ),
                       Text(
                         'High score: $highscore',
-                        style: Theme.of(context).textTheme.headline6,
+                        style: TextStyle(color: textColor, fontSize: 25),
                       ),
                     ],
                   ),

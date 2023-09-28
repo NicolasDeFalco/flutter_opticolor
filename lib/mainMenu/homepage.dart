@@ -1,61 +1,137 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../coreGame/game.dart';
 //import 'score.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({Key? key, required this.title, required this.highscore})
+  const MyHomePage(
+      {Key? key,
+      required this.title,
+      required this.highscore,
+      required this.darkmode,
+      required this.textColor})
       : super(key: key);
 
   final String title;
   final int highscore;
+  final bool darkmode;
+  final Color textColor;
 
   @override
-  State<MyHomePage> createState() => MyHomePageState(highscore);
+  State<MyHomePage> createState() =>
+      MyHomePageState(highscore, darkmode, textColor);
 }
 
 class MyHomePageState extends State<MyHomePage> {
   //Variable declaration
   int highscore;
+  bool darkMode;
+  Color textColor;
 
-  MyHomePageState(this.highscore);
+  MyHomePageState(this.highscore, this.darkMode, this.textColor);
 
   void waitForCallback(BuildContext context) async {
-    final newBest = await Navigator.push(context,
-        MaterialPageRoute(builder: ((context) => Game(highscore: highscore))));
+    final newBest = await Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: ((context) => Game(
+                  highscore: highscore,
+                  darkMode: darkMode,
+                  textColor: textColor,
+                ))));
     setState(() {
       highscore = newBest;
     });
   }
 
+  Color uiTheme() {
+    if (darkMode) {
+      themeSwitch(darkMode);
+      textColor = Colors.white;
+      return Colors.grey.shade900;
+    }
+    themeSwitch(darkMode);
+    textColor = Colors.black54;
+    return Colors.white;
+  }
+
+  void themeSwitch(bool themeData) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('darkMode', themeData);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+        backgroundColor: uiTheme(),
+        body: SafeArea(
+            child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                'OPTICOLOR',
-                style: Theme.of(context).textTheme.headline3,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  SizedBox.fromSize(
+                    size: const Size(50, 50),
+                    child: ClipOval(
+                      child: Material(
+                        color: Colors.grey.shade100,
+                        child: InkWell(
+                          //splashColor: Colors.white,
+                          onTap: () {
+                            //waitForCallback(context);
+                          },
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const <Widget>[
+                              Icon(Icons.book),
+                              Text("Rules"),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Switch(
+                        value: darkMode,
+                        onChanged: (bool value) {
+                          setState(() {
+                            darkMode = value;
+                          });
+                        },
+                        activeColor: Colors.grey.shade600,
+                      ),
+                      Text("Dark mode ", style: TextStyle(color: textColor))
+                    ],
+                  )
+                ],
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'High score: $highscore',
-                style: Theme.of(context).textTheme.headline4,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'OPTICOLOR',
+                    style: TextStyle(color: textColor, fontSize: 50),
+                  ),
+                ],
               ),
-            ],
-          ),
-          // The widget bellow is an icon button with, of course, an icon,
-          // but this button also contain text, which is really useful.
-          // BTW, this button is to reset all the value to zero
-          /*SizedBox.fromSize(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'High score: $highscore',
+                    style: TextStyle(color: textColor, fontSize: 30),
+                  ),
+                ],
+              ),
+              // The widget bellow is an icon button with, of course, an icon,
+              // but this button also contain text, which is really useful.
+              // BTW, this button is to reset all the value to zero
+              /*SizedBox.fromSize(
                 size: const Size(56, 56),
                 child: ClipOval(
                   child: Material(
@@ -74,29 +150,36 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
               ),*/
-          SizedBox.fromSize(
-            size: const Size(80, 80),
-            child: ClipOval(
-              child: Material(
-                color: Colors.pink,
-                child: InkWell(
-                  //splashColor: Colors.white,
-                  onTap: () {
-                    waitForCallback(context);
-                  },
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const <Widget>[
-                      Icon(Icons.play_arrow),
-                      Text("Play !"),
-                    ],
+              SizedBox.fromSize(
+                size: const Size(80, 80),
+                child: ClipOval(
+                  child: Material(
+                    color: Colors.pink,
+                    child: InkWell(
+                      //splashColor: Colors.white,
+                      onTap: () {
+                        waitForCallback(context);
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Icon(Icons.play_arrow),
+                          Text(
+                            "Play !",
+                            style: TextStyle(color: textColor),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ),
               ),
-            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[],
+              ),
+            ],
           ),
-        ],
-      ),
-    ));
+        )));
   }
 }

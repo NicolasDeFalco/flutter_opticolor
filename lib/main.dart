@@ -3,30 +3,28 @@ import 'package:flutter/material.dart';
 import 'mainMenu/homepage.dart';
 
 void main() async {
-  int highscore = await getHighscore();
-  runApp(MyApp(highscore: highscore));
-}
-
-// Cette fonction va aller chercher la valeur highscore
-// qu'on a stockée et va nous la retourné
-Future<int> getHighscore() async {
-  // Ceci est nécessaire si on veut executer du code avant d'utiliser runApp()
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Va créer une instance de SharedPreferences pour que l'on puisse
-  // prendre nos valeurs stockées
   final prefs = await SharedPreferences.getInstance();
-
-  // Va chercher la valeur que l'on souhaite récupérer.
-  // Elle nous retournera 0 si elle ne trouve rien.
-  final savedHighscore = prefs.getInt('highscore') ?? 0;
-
-  return savedHighscore;
+  int highscore = prefs.getInt('highscore') ?? 0;
+  bool darkMode = prefs.getBool('darkMode') ?? false;
+  Color textColor;
+  if (darkMode) {
+    textColor = Colors.black54;
+  } else {
+    textColor = Colors.white;
+  }
+  runApp(MyApp(highscore: highscore, darkMode: darkMode, textColor: textColor));
 }
 
 class MyApp extends StatelessWidget {
   final int highscore;
-  const MyApp({super.key, required this.highscore});
+  final bool darkMode;
+  final Color textColor;
+  const MyApp(
+      {super.key,
+      required this.highscore,
+      required this.darkMode,
+      required this.textColor});
 
   // This widget is the root of your application.
   @override
@@ -36,7 +34,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page', highscore: highscore),
+      home: MyHomePage(
+          title: 'Flutter Demo Home Page',
+          highscore: highscore,
+          darkmode: darkMode,
+          textColor: textColor),
       debugShowCheckedModeBanner: false,
     );
   }
