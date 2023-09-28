@@ -33,9 +33,6 @@ class MyHomePageState extends State<MyHomePage> {
         body: Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        // These widget make buttons that add and/or subtract
-        // value. There is also a counter that tell you the
-        // value of the concerned integers.
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.center,

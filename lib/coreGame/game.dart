@@ -20,7 +20,7 @@ class GameState extends State<Game> {
 
   //List of item
   final List<Color> fontColor = [
-    Colors.pink,
+    Colors.pink.shade200,
     Colors.purple,
     Colors.brown,
     Colors.yellow,
@@ -149,7 +149,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.pink,
+                            color: Colors.pink.shade200,
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
