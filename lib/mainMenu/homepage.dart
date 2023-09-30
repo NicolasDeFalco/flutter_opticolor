@@ -78,9 +78,31 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Material(
                         color: Colors.grey.shade100,
                         child: InkWell(
-                          //splashColor: Colors.white,
                           onTap: () {
-                            //waitForCallback(context);
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      backgroundColor: uiTheme(),
+                                      title: Text(
+                                        "Rules",
+                                        style: TextStyle(
+                                            color: textColor, fontSize: 25),
+                                      ),
+                                      content: Text(
+                                        "This game is really simple: \n \nA colour will be written on the screen in a certain color(the word red will be colored in blue for example).\n\nYour objective is to press the button corresponding with the color of the word.\n\n This game is inspired by the stroop effect.",
+                                        style: TextStyle(
+                                            color: textColor, fontSize: 15),
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text("Ok",
+                                                style: TextStyle(
+                                                    color: Colors.grey.shade400,
+                                                    fontSize: 15)))
+                                      ],
+                                    ));
                           },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -128,28 +150,6 @@ class MyHomePageState extends State<MyHomePage> {
                   ),
                 ],
               ),
-              // The widget bellow is an icon button with, of course, an icon,
-              // but this button also contain text, which is really useful.
-              // BTW, this button is to reset all the value to zero
-              /*SizedBox.fromSize(
-                size: const Size(56, 56),
-                child: ClipOval(
-                  child: Material(
-                    color: Colors.pink,
-                    child: InkWell(
-                      //splashColor: Colors.white,
-                      onTap: _reset,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const <Widget>[
-                          Icon(Icons.question_mark),
-                          Text("Reset"),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),*/
               SizedBox.fromSize(
                 size: const Size(80, 80),
                 child: ClipOval(
@@ -163,7 +163,7 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
-                          Icon(Icons.play_arrow),
+                          const Icon(Icons.play_arrow),
                           Text(
                             "Play !",
                             style: TextStyle(color: textColor),
