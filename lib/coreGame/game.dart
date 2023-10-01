@@ -1,31 +1,52 @@
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
+import 'package:async/async.dart';
 import 'dart:math';
+import 'package:timer_count_down/timer_count_down.dart';
+import 'package:timer_count_down/timer_controller.dart';
 
 class Game extends StatefulWidget {
   int highscore;
   bool darkMode;
   Color textColor;
+  int seconde;
+  RestartableTimer timer;
+  bool hard;
   Game(
       {Key? key,
       required this.highscore,
       required this.darkMode,
-      required this.textColor})
+      required this.textColor,
+      required this.seconde,
+      required this.timer,
+      required this.hard})
       : super(key: key);
 
   @override
-  State<Game> createState() => GameState(highscore, darkMode, textColor);
+  State<Game> createState() =>
+      GameState(highscore, darkMode, textColor, seconde, timer, hard);
 }
 
 class GameState extends State<Game> {
   //Simple value and RNGs
   int score = 0;
-  int highscore;
+  final int highscore;
   int rngFont = Random().nextInt(9) + 1;
   int rngText = Random().nextInt(9) + 1;
   bool ok = true;
+  bool passed = false;
+
   bool darkMode;
   Color textColor;
+  bool hard;
+
+  final int seconde;
+  int countdown = 0;
+
+  RestartableTimer timer;
+
+  final CountdownController _controller =
+      new CountdownController(autoStart: true);
 
   //List of item
   final List<Color> fontColor = [
@@ -34,7 +55,7 @@ class GameState extends State<Game> {
     Colors.brown,
     Colors.yellow,
     Colors.red,
-    Colors.orange,
+    Colors.orange.shade800,
     Colors.green,
     Colors.blue,
     Colors.grey,
@@ -55,7 +76,8 @@ class GameState extends State<Game> {
     "New highscore!"
   ];
 
-  GameState(this.highscore, this.darkMode, this.textColor);
+  GameState(this.highscore, this.darkMode, this.textColor, this.seconde,
+      this.timer, this.hard);
 
   Color uiTheme() {
     if (darkMode) {
@@ -66,7 +88,10 @@ class GameState extends State<Game> {
 
   void _callback(BuildContext context) async {
     ok = false;
+    passed = true;
     int? newPB = highscore;
+    countdown = 0;
+    timer.cancel;
     setState(() {
       rngText = 10;
       rngFont = 10;
@@ -94,7 +119,8 @@ class GameState extends State<Game> {
   }
 
   void checkColor(int colorValue) {
-    if (ok = true) {
+    debugPrint(timer.tick.toString());
+    if (ok) {
       if (colorValue == rngFont) {
         setState(() {
           score++;
@@ -107,10 +133,31 @@ class GameState extends State<Game> {
   }
 
   void rerollFontColor() {
-    if (ok == true) {
+    timer.reset();
+    _controller.restart();
+    setState(() {
+      countdown = seconde;
+    });
+    if (ok) {
       rngFont = Random().nextInt(9) + 1;
       rngText = Random().nextInt(9) + 1;
     }
+  }
+
+  Color buttonOutline(int id) {
+    if (!hard) {
+      return textColor;
+    }
+    return fontColor[id];
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    countdown = seconde;
+    timer = RestartableTimer(Duration(seconds: seconde), () {
+      if (!passed) _callback(context);
+    });
   }
 
   @override
@@ -152,6 +199,14 @@ class GameState extends State<Game> {
                   ),
                 ],
               ),
+              Countdown(
+                controller: _controller,
+                seconds: countdown,
+                build: (BuildContext context, double time) => Text(
+                    time.toString(),
+                    style: TextStyle(color: textColor, fontSize: 25)),
+                interval: Duration(milliseconds: 100),
+              ),
               Text(
                 writtenText[rngText - 1],
                 style: TextStyle(color: fontColor[rngFont - 1], fontSize: 50),
@@ -166,7 +221,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.pink.shade200,
+                            color: buttonOutline(0),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -188,7 +243,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.purple,
+                            color: buttonOutline(1),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -210,7 +265,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.brown,
+                            color: buttonOutline(2),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -237,7 +292,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.yellow,
+                            color: buttonOutline(3),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -259,7 +314,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.red,
+                            color: buttonOutline(4),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -281,7 +336,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.orange,
+                            color: buttonOutline(5),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -308,7 +363,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.green,
+                            color: buttonOutline(6),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -330,7 +385,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.blue,
+                            color: buttonOutline(7),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {
@@ -352,7 +407,7 @@ class GameState extends State<Game> {
                         size: const Size(120, 90),
                         child: ClipRRect(
                           child: Material(
-                            color: Colors.grey,
+                            color: buttonOutline(8),
                             child: InkWell(
                               //splashColor: Colors.white,
                               onTap: () {

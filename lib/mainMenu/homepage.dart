@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../coreGame/game.dart';
+import 'package:opticolor/difficulty/difficulty.dart';
+import 'package:async/async.dart';
 //import 'score.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -24,9 +26,21 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   //Variable declaration
+
   int highscore;
   bool darkMode;
   Color textColor;
+  int index = 0;
+  Object _dropdownvalue = 'Easy';
+
+  final List<Difficulty> difficulty = [
+    Difficulty(
+        0, RestartableTimer(Duration(seconds: 5), () => null), 5, "Easy", true),
+    Difficulty(1, RestartableTimer(Duration(seconds: 3), () => null), 3,
+        "Medium", true),
+    Difficulty(
+        2, RestartableTimer(Duration(seconds: 2), () => null), 2, "Hard", false)
+  ];
 
   MyHomePageState(this.highscore, this.darkMode, this.textColor);
 
@@ -38,9 +52,12 @@ class MyHomePageState extends State<MyHomePage> {
                   highscore: highscore,
                   darkMode: darkMode,
                   textColor: textColor,
+                  seconde: difficulty[index].countdown,
+                  timer: difficulty[index].timer,
+                  hard: difficulty[index].tileColor,
                 ))));
     setState(() {
-      highscore = newBest;
+      highscore = newBest ?? highscore;
     });
   }
 
@@ -89,7 +106,7 @@ class MyHomePageState extends State<MyHomePage> {
                                             color: textColor, fontSize: 25),
                                       ),
                                       content: Text(
-                                        "This game is really simple: \n \nA colour will be written on the screen in a certain color(the word red will be colored in blue for example).\n\nYour objective is to press the button corresponding with the color of the word.\n\n This game is inspired by the stroop effect.",
+                                        "This game is really simple: \n \nA colour will be written on the screen in a certain color(the word red will be colored in blue for example).\n\nYour objective is to press the button corresponding with the color of the word.\n\nThis game is inspired by the Stroop effect.",
                                         style: TextStyle(
                                             color: textColor, fontSize: 15),
                                       ),
@@ -149,6 +166,44 @@ class MyHomePageState extends State<MyHomePage> {
                     style: TextStyle(color: textColor, fontSize: 30),
                   ),
                 ],
+              ),
+              DropdownButton(
+                value: _dropdownvalue,
+                items: const <DropdownMenuItem<String>>[
+                  DropdownMenuItem(
+                      value: "Easy",
+                      child: Text("Easy",
+                          style: TextStyle(color: Colors.green, fontSize: 20))),
+                  DropdownMenuItem(
+                      value: "Medium",
+                      child: Text("Medium",
+                          style:
+                              TextStyle(color: Colors.orange, fontSize: 20))),
+                  DropdownMenuItem(
+                      value: "Hard",
+                      child: Text("Hard",
+                          style: TextStyle(color: Colors.red, fontSize: 20)))
+                ],
+                onChanged: (value) {
+                  // This is called when the user selects an item.
+                  setState(() {
+                    _dropdownvalue = value!;
+                    switch (value) {
+                      case "Easy":
+                        index = 0;
+                        break;
+                      case "Medium":
+                        index = 1;
+                        break;
+                      case "Hard":
+                        index = 2;
+                        break;
+                      default:
+                        break;
+                    }
+                    debugPrint(index.toString());
+                  });
+                },
               ),
               SizedBox.fromSize(
                 size: const Size(80, 80),
