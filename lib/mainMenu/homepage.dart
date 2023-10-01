@@ -106,7 +106,7 @@ class MyHomePageState extends State<MyHomePage> {
                                             color: textColor, fontSize: 25),
                                       ),
                                       content: Text(
-                                        "This game is really simple: \n \nA colour will be written on the screen in a certain color(the word red will be colored in blue for example).\n\nYour objective is to press the button corresponding with the color of the word.\n\nThis game is inspired by the Stroop effect.",
+                                        "This game is really simple: \n \nA colour will be written on the screen in a certain color(the word red will be colored in blue for example).\n\nYour objective is to press the button corresponding with the color of the word.\n\nDifficulty:\nEasy: 5 seconds between each response;\nMedium: 3 seconds between each response;\nHard: 2 seconds between each response + no color on buttons.\n\nThis game is inspired by the Stroop effect.",
                                         style: TextStyle(
                                             color: textColor, fontSize: 15),
                                       ),
@@ -201,7 +201,6 @@ class MyHomePageState extends State<MyHomePage> {
                       default:
                         break;
                     }
-                    debugPrint(index.toString());
                   });
                 },
               ),
