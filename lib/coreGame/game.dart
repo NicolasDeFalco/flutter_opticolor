@@ -81,6 +81,36 @@ class GameState extends State<Game> {
     return Colors.white;
   }
 
+  Widget rowButton(int start) {
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: <Widget>[for (int i = start; i < start + 3; i++) button(i)]);
+  }
+
+  Widget button(int button) {
+    return SizedBox.fromSize(
+      size: const Size(120, 90),
+      child: ClipRRect(
+        child: Material(
+          color: buttonOutline(button),
+          child: InkWell(
+            onTap: () {
+              setState(() {
+                checkColor(button);
+              });
+            },
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(writtenText[button]),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   void _callback(BuildContext context) async {
     ok = false;
     passed = true;
@@ -88,14 +118,14 @@ class GameState extends State<Game> {
     countdown = 0;
     difficulty.timer.cancel;
     setState(() {
-      rngText = 10;
-      rngFont = 10;
+      rngText = 9;
+      rngFont = 9;
     });
     await Future.delayed(const Duration(seconds: 3));
     if (score > highscore) {
       newPB = score;
       setState(() {
-        rngText = 11;
+        rngText = 10;
       });
       await saveHighscore(score);
       await Future.delayed(const Duration(seconds: 3));
@@ -133,8 +163,8 @@ class GameState extends State<Game> {
       countdown = difficulty.countdown;
     });
     if (ok) {
-      rngFont = Random().nextInt(9) + 1;
-      rngText = Random().nextInt(9) + 1;
+      rngFont = Random().nextInt(9);
+      rngText = Random().nextInt(9);
     }
   }
 
@@ -159,19 +189,6 @@ class GameState extends State<Game> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: uiTheme(),
-      /*appBar: AppBar(
-        title: Text("Opticolor"),
-        // The widget bellow allow you to turn your appbar
-        // into a gradient.
-        flexibleSpace: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: <Color>[Colors.purple, Colors.pink]),
-          ),
-        ),
-      ),*/
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -203,225 +220,13 @@ class GameState extends State<Game> {
                 interval: const Duration(milliseconds: 100),
               ),
               Text(
-                writtenText[rngText - 1],
-                style: TextStyle(color: fontColor[rngFont - 1], fontSize: 50),
+                writtenText[rngText],
+                style: TextStyle(color: fontColor[rngFont], fontSize: 50),
               ),
               Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(0),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(1);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("PINK"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(1),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(2);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("PURPLE"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(2),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(3);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("BROWN"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(3),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(4);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("YELLOW"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(4),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(5);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("RED"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(5),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(6);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("ORANGE"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(6),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(7);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("GREEN"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(7),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(8);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("BLUE"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox.fromSize(
-                        size: const Size(120, 90),
-                        child: ClipRRect(
-                          child: Material(
-                            color: buttonOutline(8),
-                            child: InkWell(
-                              //splashColor: Colors.white,
-                              onTap: () {
-                                setState(() {
-                                  checkColor(9);
-                                });
-                              },
-                              child: const Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: <Widget>[
-                                  Text("GREY"),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  for (int i = 0; i < 9; i = i + 3) rowButton(i)
                 ],
               ),
             ]),
