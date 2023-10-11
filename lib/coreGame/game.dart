@@ -1,30 +1,30 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'dart:math';
+import '../difficulty/difficulty.dart';
 import 'package:timer_count_down/timer_count_down.dart';
 import 'package:timer_count_down/timer_controller.dart';
 
 class Game extends StatefulWidget {
-  int highscore;
-  bool darkMode;
-  Color textColor;
-  int seconde;
-  RestartableTimer timer;
-  bool hard;
-  Game(
+  final int highscore;
+  final bool darkMode;
+  final Color textColor;
+  final Difficulty difficulty;
+
+  const Game(
       {Key? key,
       required this.highscore,
       required this.darkMode,
       required this.textColor,
-      required this.seconde,
-      required this.timer,
-      required this.hard})
+      required this.difficulty})
       : super(key: key);
 
   @override
   State<Game> createState() =>
-      GameState(highscore, darkMode, textColor, seconde, timer, hard);
+      GameState(highscore, darkMode, textColor, difficulty);
 }
 
 class GameState extends State<Game> {
@@ -35,18 +35,14 @@ class GameState extends State<Game> {
   int rngText = Random().nextInt(9) + 1;
   bool ok = true;
   bool passed = false;
+  int countdown = 0;
+
+  Difficulty difficulty;
 
   bool darkMode;
   Color textColor;
-  bool hard;
 
-  final int seconde;
-  int countdown = 0;
-
-  RestartableTimer timer;
-
-  final CountdownController _controller =
-      new CountdownController(autoStart: true);
+  final CountdownController _controller = CountdownController(autoStart: true);
 
   //List of item
   final List<Color> fontColor = [
@@ -55,7 +51,7 @@ class GameState extends State<Game> {
     Colors.brown,
     Colors.yellow,
     Colors.red,
-    Colors.orange.shade800,
+    Colors.orange.shade500,
     Colors.green,
     Colors.blue,
     Colors.grey,
@@ -76,8 +72,7 @@ class GameState extends State<Game> {
     "New highscore!"
   ];
 
-  GameState(this.highscore, this.darkMode, this.textColor, this.seconde,
-      this.timer, this.hard);
+  GameState(this.highscore, this.darkMode, this.textColor, this.difficulty);
 
   Color uiTheme() {
     if (darkMode) {
@@ -91,7 +86,7 @@ class GameState extends State<Game> {
     passed = true;
     int? newPB = highscore;
     countdown = 0;
-    timer.cancel;
+    difficulty.timer.cancel;
     setState(() {
       rngText = 10;
       rngFont = 10;
@@ -119,7 +114,6 @@ class GameState extends State<Game> {
   }
 
   void checkColor(int colorValue) {
-    debugPrint(timer.tick.toString());
     if (ok) {
       if (colorValue == rngFont) {
         setState(() {
@@ -133,10 +127,10 @@ class GameState extends State<Game> {
   }
 
   void rerollFontColor() {
-    timer.reset();
+    difficulty.timer.reset();
     _controller.restart();
     setState(() {
-      countdown = seconde;
+      countdown = difficulty.countdown;
     });
     if (ok) {
       rngFont = Random().nextInt(9) + 1;
@@ -145,7 +139,7 @@ class GameState extends State<Game> {
   }
 
   Color buttonOutline(int id) {
-    if (!hard) {
+    if (!difficulty.tileColor) {
       return textColor;
     }
     return fontColor[id];
@@ -154,8 +148,9 @@ class GameState extends State<Game> {
   @override
   void initState() {
     super.initState();
-    countdown = seconde;
-    timer = RestartableTimer(Duration(seconds: seconde), () {
+    countdown = difficulty.countdown;
+    difficulty.timer =
+        RestartableTimer(Duration(seconds: difficulty.countdown), () {
       if (!passed) _callback(context);
     });
   }
@@ -205,7 +200,7 @@ class GameState extends State<Game> {
                 build: (BuildContext context, double time) => Text(
                     time.toString(),
                     style: TextStyle(color: textColor, fontSize: 25)),
-                interval: Duration(milliseconds: 100),
+                interval: const Duration(milliseconds: 100),
               ),
               Text(
                 writtenText[rngText - 1],
@@ -229,9 +224,9 @@ class GameState extends State<Game> {
                                   checkColor(1);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("PINK"),
                                 ],
                               ),
@@ -251,9 +246,9 @@ class GameState extends State<Game> {
                                   checkColor(2);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("PURPLE"),
                                 ],
                               ),
@@ -273,9 +268,9 @@ class GameState extends State<Game> {
                                   checkColor(3);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("BROWN"),
                                 ],
                               ),
@@ -300,9 +295,9 @@ class GameState extends State<Game> {
                                   checkColor(4);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("YELLOW"),
                                 ],
                               ),
@@ -322,9 +317,9 @@ class GameState extends State<Game> {
                                   checkColor(5);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("RED"),
                                 ],
                               ),
@@ -344,9 +339,9 @@ class GameState extends State<Game> {
                                   checkColor(6);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("ORANGE"),
                                 ],
                               ),
@@ -371,9 +366,9 @@ class GameState extends State<Game> {
                                   checkColor(7);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("GREEN"),
                                 ],
                               ),
@@ -393,9 +388,9 @@ class GameState extends State<Game> {
                                   checkColor(8);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("BLUE"),
                                 ],
                               ),
@@ -415,9 +410,9 @@ class GameState extends State<Game> {
                                   checkColor(9);
                                 });
                               },
-                              child: Column(
+                              child: const Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const <Widget>[
+                                children: <Widget>[
                                   Text("GREY"),
                                 ],
                               ),

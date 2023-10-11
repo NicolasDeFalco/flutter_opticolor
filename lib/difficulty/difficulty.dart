@@ -1,12 +1,10 @@
 import 'package:async/async.dart';
 
 class Difficulty {
-  int id;
   RestartableTimer timer;
-  int countdown;
-  String difficulty;
-  bool tileColor;
+  final int countdown;
+  final String difficulty;
+  final bool tileColor;
 
-  Difficulty(
-      this.id, this.timer, this.countdown, this.difficulty, this.tileColor);
+  Difficulty(this.timer, this.countdown, this.difficulty, this.tileColor);
 }

@@ -35,11 +35,11 @@ class MyHomePageState extends State<MyHomePage> {
 
   final List<Difficulty> difficulty = [
     Difficulty(
-        0, RestartableTimer(Duration(seconds: 5), () => null), 5, "Easy", true),
-    Difficulty(1, RestartableTimer(Duration(seconds: 3), () => null), 3,
-        "Medium", true),
+        RestartableTimer(Duration(seconds: 5), () => null), 5, "Easy", true),
     Difficulty(
-        2, RestartableTimer(Duration(seconds: 2), () => null), 2, "Hard", false)
+        RestartableTimer(Duration(seconds: 3), () => null), 3, "Medium", true),
+    Difficulty(
+        RestartableTimer(Duration(seconds: 2), () => null), 2, "Hard", false)
   ];
 
   MyHomePageState(this.highscore, this.darkMode, this.textColor);
@@ -52,9 +52,7 @@ class MyHomePageState extends State<MyHomePage> {
                   highscore: highscore,
                   darkMode: darkMode,
                   textColor: textColor,
-                  seconde: difficulty[index].countdown,
-                  timer: difficulty[index].timer,
-                  hard: difficulty[index].tileColor,
+                  difficulty: difficulty[index],
                 ))));
     setState(() {
       highscore = newBest ?? highscore;
