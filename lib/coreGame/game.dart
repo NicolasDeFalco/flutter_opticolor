@@ -31,8 +31,8 @@ class GameState extends State<Game> {
   //Simple value and RNGs
   int score = 0;
   final int highscore;
-  int rngFont = Random().nextInt(9) + 1;
-  int rngText = Random().nextInt(9) + 1;
+  int rngFont = Random().nextInt(9);
+  int rngText = Random().nextInt(9);
   bool ok = true;
   bool passed = false;
   int countdown = 0;
@@ -51,7 +51,7 @@ class GameState extends State<Game> {
     Colors.brown,
     Colors.yellow,
     Colors.red,
-    Colors.orange.shade500,
+    Colors.orange.shade600,
     Colors.green,
     Colors.blue,
     Colors.grey,
