@@ -9,25 +9,25 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage(
       {Key? key,
       required this.title,
-      required this.highscore,
+      required this.highscores,
       required this.darkmode,
       required this.textColor})
       : super(key: key);
 
   final String title;
-  final int highscore;
+  final List<int> highscores;
   final bool darkmode;
   final Color textColor;
 
   @override
   State<MyHomePage> createState() =>
-      MyHomePageState(highscore, darkmode, textColor);
+      MyHomePageState(highscores, darkmode, textColor);
 }
 
 class MyHomePageState extends State<MyHomePage> {
   //Variable declaration
 
-  int highscore;
+  List<int> highscores;
   bool darkMode;
   Color textColor;
   int index = 0;
@@ -35,27 +35,27 @@ class MyHomePageState extends State<MyHomePage> {
 
   final List<Difficulty> difficulty = [
     Difficulty(
-        RestartableTimer(Duration(seconds: 5), () => null), 5, "Easy", true),
+        0, RestartableTimer(Duration(seconds: 5), () => null), 5, "Easy", true),
+    Difficulty(1, RestartableTimer(Duration(seconds: 3), () => null), 3,
+        "Medium", true),
     Difficulty(
-        RestartableTimer(Duration(seconds: 3), () => null), 3, "Medium", true),
-    Difficulty(
-        RestartableTimer(Duration(seconds: 2), () => null), 2, "Hard", false)
+        2, RestartableTimer(Duration(seconds: 2), () => null), 2, "Hard", false)
   ];
 
-  MyHomePageState(this.highscore, this.darkMode, this.textColor);
+  MyHomePageState(this.highscores, this.darkMode, this.textColor);
 
   void waitForCallback(BuildContext context) async {
     final newBest = await Navigator.push(
         context,
         MaterialPageRoute(
             builder: ((context) => Game(
-                  highscore: highscore,
+                  highscore: highscores[index],
                   darkMode: darkMode,
                   textColor: textColor,
                   difficulty: difficulty[index],
                 ))));
     setState(() {
-      highscore = newBest ?? highscore;
+      highscores[index] = newBest ?? highscores[index];
     });
   }
 
@@ -160,7 +160,7 @@ class MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'High score: $highscore',
+                    'High score: ${highscores[index]}',
                     style: TextStyle(color: textColor, fontSize: 30),
                   ),
                 ],

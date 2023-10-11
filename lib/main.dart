@@ -5,7 +5,10 @@ import 'mainMenu/homepage.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = await SharedPreferences.getInstance();
-  int highscore = prefs.getInt('highscore') ?? 0;
+  List<int> highscores = [0, 0, 0];
+  highscores[0] = prefs.getInt('highscore') ?? 0;
+  highscores[1] = prefs.getInt('medium') ?? 0;
+  highscores[2] = prefs.getInt('hard') ?? 0;
   bool darkMode = prefs.getBool('darkMode') ?? false;
   Color textColor;
   if (darkMode) {
@@ -13,16 +16,17 @@ void main() async {
   } else {
     textColor = Colors.white;
   }
-  runApp(MyApp(highscore: highscore, darkMode: darkMode, textColor: textColor));
+  runApp(
+      MyApp(highscores: highscores, darkMode: darkMode, textColor: textColor));
 }
 
 class MyApp extends StatelessWidget {
-  final int highscore;
+  final List<int> highscores;
   final bool darkMode;
   final Color textColor;
   const MyApp(
       {super.key,
-      required this.highscore,
+      required this.highscores,
       required this.darkMode,
       required this.textColor});
 
@@ -36,7 +40,7 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(
           title: 'Flutter Demo Home Page',
-          highscore: highscore,
+          highscores: highscores,
           darkmode: darkMode,
           textColor: textColor),
       debugShowCheckedModeBanner: false,

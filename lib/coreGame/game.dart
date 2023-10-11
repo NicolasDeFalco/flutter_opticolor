@@ -133,14 +133,21 @@ class GameState extends State<Game> {
     Navigator.pop(context, newPB);
   }
 
-  // Cette fonction va sauvegarder notre nouveau meilleur score
   Future<void> saveHighscore(int newHighscore) async {
-    // On va d'abord créer une instance de SharePreferences
-    // pour pouvoir modifier la valeur que l'on a stockée
     final prefs = await SharedPreferences.getInstance();
-
-    // Puis on va sauvegarder notre nouveau meilleur score
-    await prefs.setInt('highscore', newHighscore);
+    switch (difficulty.id) {
+      case 0:
+        await prefs.setInt('highscore', newHighscore);
+        break;
+      case 1:
+        await prefs.setInt('medium', newHighscore);
+        break;
+      case 2:
+        await prefs.setInt('hard', newHighscore);
+        break;
+      default:
+        break;
+    }
   }
 
   void checkColor(int colorValue) {
