@@ -39,12 +39,12 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Opticolor',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(
-          title: 'Flutter Demo Home Page',
+          title: 'Opticolor',
           highscores: highscores,
           darkmode: darkMode,
           textColor: textColor),
